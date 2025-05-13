@@ -9,13 +9,12 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: addons
-  source:
-    type: Helm
+  source: 
     helm: 
       releaseName: external-secrets
-      chart: external-secrets
-      version: 0.16.2
-      repoURL: https://charts.external-secrets.io
+    chart: external-secrets
+    version: 0.16.2
+    repoURL: https://charts.external-secrets.io
     
   destination:
     server: https://kubernetes.default.svc
