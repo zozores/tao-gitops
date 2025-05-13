@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: external-secrets-chart
+  namespace: external-secrets
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: addons
+  source:
+    type: Helm
+    helm: 
+      releaseName: external-secrets
+      chart: external-secrets
+      version: 0.16.2
+      repository: https://charts.external-secrets.io
+    
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: external-secrets
+
+  # Sync policy
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true  
+    automated: 
+      prune: true
+      selfHeal: true 
